@@ -20,7 +20,6 @@ import {
 } from 'lucide-react';
 
 // --- Constants ---
-// TODO: Insert your Gemini API key here. Get one at https://aistudio.google.com/
 const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
 // --- API Helper ---
