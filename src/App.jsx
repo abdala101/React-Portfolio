@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Github, 
-  Linkedin, 
-  Mail, 
-  ExternalLink, 
-  Code2, 
-  Terminal, 
-  Cpu, 
-  Globe, 
-  Moon, 
+import {
+  Github,
+  Linkedin,
+  Mail,
+  ExternalLink,
+  Code2,
+  Terminal,
+  Cpu,
+  Globe,
+  Moon,
   Sun,
   Menu,
   X,
@@ -20,13 +20,13 @@ import {
 } from 'lucide-react';
 
 // --- Constants ---
-// TODO: Insert your Gemini API key here. Get one at https://aistudio.google.com/
 const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
 // --- API Helper ---
 const callGemini = async (prompt) => {
   if (!apiKey) {
-    alert("Please add your Gemini API key in src/App.jsx to use AI features.");
+    // We log a warning instead of alert to not disrupt the UI flow in preview
+    console.warn("API Key missing! Make sure VITE_GEMINI_API_KEY is set in your .env file and uncommented in the code.");
     return null;
   }
   try {
@@ -87,10 +87,15 @@ const Navbar = ({ darkMode, toggleTheme }) => {
 
   return (
     <nav className={`fixed w-full z-50 transition-all duration-300 ${
-      scrolled 
-        ? (darkMode ? 'bg-slate-900/90 backdrop-blur-md border-b border-slate-800' : 'bg-white/90 backdrop-blur-md border-b border-gray-200') 
-        : 'bg-transparent'
+      scrolled ? 'py-2' : 'py-4'
+    } ${
+      scrolled
+      ? (darkMode
+          ? 'bg-slate-900 shadow-sm shadow-black/20'
+          : 'bg-white shadow-sm shadow-black/10')
+      : 'bg-transparent'
     }`}>
+
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
@@ -98,7 +103,7 @@ const Navbar = ({ darkMode, toggleTheme }) => {
             <span className={`text-2xl font-bold tracking-tighter ${
               darkMode ? 'text-white' : 'text-slate-900'
             }`}>
-              Alex<span className="text-indigo-500">.Dev</span>
+              Abdala<span className="text-indigo-500"> . Farah</span>
             </span>
           </div>
 
@@ -176,7 +181,8 @@ const Navbar = ({ darkMode, toggleTheme }) => {
 
 const Hero = ({ darkMode }) => {
   return (
-    <section className={`min-h-screen flex items-center pt-20 ${
+    // Added 'relative' here so the absolute positioned arrow is relative to the Section, not the viewport
+    <section className={`min-h-screen flex items-center pt-36 relative ${
       darkMode ? 'bg-slate-900' : 'bg-gray-50'
     }`}>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
@@ -199,13 +205,13 @@ const Hero = ({ darkMode }) => {
             <p className={`text-lg md:text-xl max-w-2xl mx-auto md:mx-0 ${
               darkMode ? 'text-slate-400' : 'text-slate-600'
             }`}>
-              I craft responsive websites and robust applications with modern technologies. 
+              I craft responsive websites and robust applications with modern technologies.
               Focused on clean code, pixel-perfect design, and seamless user interaction.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4 pt-4">
-              <a 
-                href="#projects" 
+              <a
+                href="#projects"
                 onClick={(e) => {
                   e.preventDefault();
                   document.querySelector('#projects').scrollIntoView({ behavior: 'smooth' });
@@ -214,15 +220,15 @@ const Hero = ({ darkMode }) => {
               >
                 View My Work
               </a>
-              <a 
-                href="#contact" 
+              <a
+                href="#contact"
                 onClick={(e) => {
                   e.preventDefault();
                   document.querySelector('#contact').scrollIntoView({ behavior: 'smooth' });
                 }}
                 className={`px-8 py-3.5 rounded-full font-semibold border transition-all w-full sm:w-auto text-center ${
-                  darkMode 
-                    ? 'border-slate-700 text-white hover:bg-slate-800' 
+                  darkMode
+                    ? 'border-slate-700 text-white hover:bg-slate-800'
                     : 'border-slate-300 text-slate-700 hover:bg-white'
                 }`}
               >
@@ -256,7 +262,7 @@ const Hero = ({ darkMode }) => {
                      darkMode ? 'bg-slate-900 text-indigo-300' : 'bg-slate-100 text-indigo-700'
                    }`}>
                      <p>const developer = &#123;</p>
-                     <p className="pl-4">name: 'Alex',</p>
+                     <p className="pl-4">name: 'Abdala',</p>
                      <p className="pl-4">role: 'Full Stack Engineer',</p>
                      <p className="pl-4">passion: 'Building awesome stuff'</p>
                      <p>&#125;;</p>
@@ -272,10 +278,11 @@ const Hero = ({ darkMode }) => {
           </div>
 
         </div>
+      </div>
 
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce hidden md:block">
-          <ChevronDown className={darkMode ? 'text-slate-600' : 'text-slate-400'} size={32} />
-        </div>
+      {/* Moved arrow outside the inner container so it is centered relative to the Section */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce hidden md:block">
+        <ChevronDown className={darkMode ? 'text-slate-600' : 'text-slate-400'} size={32} />
       </div>
     </section>
   );
@@ -294,8 +301,8 @@ const SkillCard = ({ icon: Icon, title, skills, darkMode }) => (
     <div className="flex flex-wrap gap-2">
       {skills.map((skill) => (
         <span key={skill} className={`text-sm px-3 py-1 rounded-full ${
-          darkMode 
-            ? 'bg-slate-700 text-slate-300 border border-slate-600' 
+          darkMode
+            ? 'bg-slate-700 text-slate-300 border border-slate-600'
             : 'bg-slate-100 text-slate-600 border border-slate-200'
         }`}>
           {skill}
@@ -317,10 +324,10 @@ const ProjectCard = ({ title, description, tags, color, darkMode }) => {
     }
 
     setIsLoading(true);
-    const prompt = `You are a senior developer reviewing a portfolio. 
-    Write a short, exciting 50-word "Technical Deep Dive" for a project named "${title}". 
-    The project is described as: "${description}". 
-    The tech stack is: ${tags.join(', ')}. 
+    const prompt = `You are a senior developer reviewing a portfolio.
+    Write a short, exciting 50-word "Technical Deep Dive" for a project named "${title}".
+    The project is described as: "${description}".
+    The tech stack is: ${tags.join(', ')}.
     Focus on WHY this stack was chosen or the engineering value provided.`;
 
     const text = await callGemini(prompt);
@@ -391,12 +398,12 @@ const ProjectCard = ({ title, description, tags, color, darkMode }) => {
             </a>
           </div>
 
-          <button 
+          <button
             onClick={handleGenerateInsight}
             disabled={isLoading}
             className={`flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-full transition-all ${
-              darkMode 
-                ? 'bg-slate-700 hover:bg-indigo-600 text-white' 
+              darkMode
+                ? 'bg-slate-700 hover:bg-indigo-600 text-white'
                 : 'bg-slate-100 hover:bg-indigo-500 hover:text-white text-slate-700'
             }`}
           >
@@ -426,8 +433,8 @@ export default function App() {
     if (!message.trim()) return;
     setIsPolishing(true);
 
-    const prompt = `Rewrite the following message to be more professional, polite, and concise. 
-    It is intended for a developer named Alex via a contact form. 
+    const prompt = `Rewrite the following message to be more professional, polite, and concise.
+    It is intended for a developer named Abdala via a contact form.
     Original message: "${message}"`;
 
     const polished = await callGemini(prompt);
@@ -456,13 +463,13 @@ export default function App() {
           </div>
           <div className={`text-lg leading-relaxed text-center ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
             <p className="mb-6">
-              Hi there! I'm Alex, a passionate developer based in San Francisco. I specialize in building 
+              Hi there! I'm Abdala, a passionate developer based in San Francisco. I specialize in building
               exceptional digital experiences that are fast, accessible, and visually appealing.
             </p>
             <p>
-              With over 5 years of experience in full-stack development, I enjoy solving complex problems 
-              with simple, scalable solutions. Whether I'm working on a small creative website or a 
-              large-scale enterprise application, my goal is always the same: to write clean code and 
+              With over 5 years of experience in full-stack development, I enjoy solving complex problems
+              with simple, scalable solutions. Whether I'm working on a small creative website or a
+              large-scale enterprise application, my goal is always the same: to write clean code and
               ship products that users love.
             </p>
           </div>
@@ -480,19 +487,19 @@ export default function App() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <SkillCard 
+            <SkillCard
               darkMode={darkMode}
               icon={Globe}
               title="Frontend"
               skills={['React', 'Next.js', 'Tailwind CSS', 'TypeScript', 'Redux', 'HTML5/CSS3']}
             />
-            <SkillCard 
+            <SkillCard
               darkMode={darkMode}
               icon={Terminal}
               title="Backend"
               skills={['Node.js', 'Express', 'Python', 'PostgreSQL', 'MongoDB', 'REST APIs']}
             />
-            <SkillCard 
+            <SkillCard
               darkMode={darkMode}
               icon={Cpu}
               title="Tools & DevOps"
@@ -516,21 +523,21 @@ export default function App() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <ProjectCard 
+            <ProjectCard
               darkMode={darkMode}
               title="E-Commerce Dashboard"
               description="A comprehensive admin dashboard for managing products, orders, and analytics with real-time data visualization."
               tags={['React', 'Chart.js', 'Node.js']}
               color="bg-gradient-to-br from-blue-500 to-cyan-400"
             />
-            <ProjectCard 
+            <ProjectCard
               darkMode={darkMode}
               title="AI Task Manager"
               description="Smart productivity app that uses AI to categorize and prioritize tasks automatically for teams."
               tags={['Next.js', 'OpenAI API', 'Tailwind']}
               color="bg-gradient-to-br from-purple-500 to-indigo-500"
             />
-            <ProjectCard 
+            <ProjectCard
               darkMode={darkMode}
               title="Social Media App"
               description="A real-time social platform featuring stories, posts, and instant messaging capabilities."
@@ -557,11 +564,11 @@ export default function App() {
             <form className="max-w-md mx-auto space-y-4 text-left" onSubmit={(e) => e.preventDefault()}>
               <div>
                 <label className={`block text-sm font-medium mb-1 ${darkMode ? 'text-slate-300' : 'text-indigo-100'}`}>Name</label>
-                <input 
-                  type="text" 
+                <input
+                  type="text"
                   className={`w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-indigo-500 outline-none transition-all ${
-                    darkMode 
-                      ? 'bg-slate-900 border-slate-700 text-white placeholder-slate-500' 
+                    darkMode
+                      ? 'bg-slate-900 border-slate-700 text-white placeholder-slate-500'
                       : 'bg-white/10 border-white/20 text-white placeholder-indigo-200 focus:bg-white/20'
                   }`}
                   placeholder="John Doe"
@@ -569,11 +576,11 @@ export default function App() {
               </div>
               <div>
                 <label className={`block text-sm font-medium mb-1 ${darkMode ? 'text-slate-300' : 'text-indigo-100'}`}>Email</label>
-                <input 
-                  type="email" 
+                <input
+                  type="email"
                   className={`w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-indigo-500 outline-none transition-all ${
-                    darkMode 
-                      ? 'bg-slate-900 border-slate-700 text-white placeholder-slate-500' 
+                    darkMode
+                      ? 'bg-slate-900 border-slate-700 text-white placeholder-slate-500'
                       : 'bg-white/10 border-white/20 text-white placeholder-indigo-200 focus:bg-white/20'
                   }`}
                   placeholder="john@example.com"
@@ -582,7 +589,7 @@ export default function App() {
               <div>
                 <div className="flex justify-between items-center mb-1">
                   <label className={`block text-sm font-medium ${darkMode ? 'text-slate-300' : 'text-indigo-100'}`}>Message</label>
-                  <button 
+                  <button
                     type="button"
                     onClick={handlePolishMessage}
                     disabled={isPolishing || !message.trim()}
@@ -595,21 +602,21 @@ export default function App() {
                     {isPolishing ? 'Polishing...' : 'Auto-Polish ✨'}
                   </button>
                 </div>
-                <textarea 
+                <textarea
                   rows="4"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   className={`w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-indigo-500 outline-none transition-all ${
-                    darkMode 
-                      ? 'bg-slate-900 border-slate-700 text-white placeholder-slate-500' 
+                    darkMode
+                      ? 'bg-slate-900 border-slate-700 text-white placeholder-slate-500'
                       : 'bg-white/10 border-white/20 text-white placeholder-indigo-200 focus:bg-white/20'
                   }`}
                   placeholder="Tell me about your project... (Type a rough draft and click Auto-Polish!)"
                 ></textarea>
               </div>
               <button className={`w-full py-4 rounded-lg font-bold flex items-center justify-center gap-2 transition-transform active:scale-95 ${
-                darkMode 
-                  ? 'bg-indigo-600 hover:bg-indigo-700 text-white' 
+                darkMode
+                  ? 'bg-indigo-600 hover:bg-indigo-700 text-white'
                   : 'bg-white text-indigo-600 hover:bg-indigo-50'
               }`}>
                 Send Message <Send size={18} />
@@ -624,7 +631,7 @@ export default function App() {
         darkMode ? 'bg-slate-900 border-slate-800 text-slate-500' : 'bg-gray-50 border-gray-200 text-slate-500'
       }`}>
         <p className="flex items-center justify-center gap-1">
-          Made with <Code2 size={16} /> and React. © {new Date().getFullYear()} Alex.Dev
+          Made with <Code2 size={16} /> and React. © {new Date().getFullYear()} Abdala . Farah
         </p>
       </footer>
     </div>
